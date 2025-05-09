@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'cards_screen.dart'; // Import the new CardsScreen
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key}); // Added const here
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +31,12 @@ class HomeScreen extends StatelessWidget {
           ),
 
           // Welcome text aligned to right
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Text(
               'مرحبا!',
               textAlign: TextAlign.right,
-              style: TextStyle(
+              style: TextStyle( // Added const here
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
@@ -43,7 +45,7 @@ class HomeScreen extends StatelessWidget {
           ),
           
           // Flag image below text
-          Padding(
+          Padding( // Added const here
             padding: const EdgeInsets.only(top: 10.0, bottom: 20),
             child: Center(
               child: Image.asset('assets/flag.png', height: 90),
@@ -51,8 +53,8 @@ class HomeScreen extends StatelessWidget {
           ),
           
           // Description text aligned to right
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          const Padding( // Added const here
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               'هذا التطبيق الالكتروني\nلمختار مار مبحاثيل بنابيل',
               textAlign: TextAlign.center,
@@ -66,7 +68,7 @@ class HomeScreen extends StatelessWidget {
           // Four equal buttons
           Expanded(
             child: GridView.count(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20), // Added const here
               crossAxisCount: 2,
               childAspectRatio: 1.5,
               mainAxisSpacing: 20,
@@ -89,7 +91,7 @@ class HomeScreen extends StatelessWidget {
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
               blurRadius: 5,
-              offset: Offset(0, -2),
+              offset: const Offset(0, -2), // Added const here
             ),
           ],
         ),
@@ -97,11 +99,11 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: Icon(Icons.home, color: Color(0xFF075E54)),
+              icon: const Icon(Icons.home, color: Color(0xFF075E54)), // Added const here
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.credit_card, color: Colors.grey),
+              icon: const Icon(Icons.credit_card, color: Colors.grey), // Added const here
               onPressed: () {
                 Navigator.push(
                   context,
@@ -110,11 +112,11 @@ class HomeScreen extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(Icons.notifications, color: Colors.grey),
+              icon: const Icon(Icons.notifications, color: Colors.grey), // Added const here
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.person, color: Colors.grey),
+              icon: const Icon(Icons.person, color: Colors.grey), // Added const here
               onPressed: () {},
             ),
           ],
@@ -129,32 +131,33 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed)) {
-              return Color(0xFF4CAF50);
+              return const Color(0xFF4CAF50); // Added const here
             }
-            return Color(0xFF075E54);
+            return const Color(0xFF075E54); // Added const here
           },
         ),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: Color(0xFF075E54), width: 1),
+            side: const BorderSide(color: Color(0xFF075E54), width: 1), // Added const here
           ),
         ),
-        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(12)),
       ),
       onPressed: () {},
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.white, size: 30),
-          SizedBox(height: 8),
+          const SizedBox(height: 8), // Added const here
           Text(
             text,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 14),
+            style: const TextStyle(color: Colors.white, fontSize: 14), // Added const here
           ),
         ],
       ),
     );
   }
 }
+

@@ -15,7 +15,7 @@ class CardsScreen extends StatelessWidget {
       backgroundColor: Color(0xFFE8F5E9), // Light green background
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.transparent,
