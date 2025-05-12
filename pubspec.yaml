@@ -1,35 +1,48 @@
-name: emokhtar
-description: A new Flutter project.
-
+name: e_mokhtar_app
+description: "A new Flutter project."
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.7.2 <4.0.0'  # More flexible SDK constraint
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.2
-  intl_phone_field: ^3.1.0
-  provider: ^6.0.5
+  provider: ^6.1.1
+  intl_phone_field: ^3.2.0
+  image_picker: ^1.0.8     # Updated to latest 1.x version
+  scanbot_sdk: ^4.2.3      # Keep 4.x unless ready for 6.x migration
+  url_launcher: ^6.1.7
+  google_maps_flutter: ^2.2.0
+  geolocator: ^14.0.0       # Keep 9.x unless ready for 14.x migration
+  http: ^1.4.0            # Keep 0.x version for compatibility
+  intl: ^0.20.2
+  cupertino_icons: ^1.0.5  # Updated to latest 1.x
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1    # Keep compatible with current setup
+  flutter_launcher_icons: ^0.13.1  # Updated launcher icons
 
 flutter:
   uses-material-design: true
+  
   assets:
     - assets/logo.png
+    - assets/logo_W.png
     - assets/profile_photo.jpg
     - assets/flag.png
-    - assets/phone_input_background.jpg
+    - assets/mukhtar_profile.jpg
+    - assets/AppIcons/appstore.png
+    - assets/AppIcons/playstore.png
 
-  fonts:
-    - family: assets/fonts/Tajawal-Regular.ttf
-      fonts:
-        - asset: assets/fonts/Tajawal-Regular.ttf
-          weight: 700
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/AppIcons/appstore.png"
+  adaptive_icon_foreground: "assets/AppIcons/playstore.png"
+  adaptive_icon_background: "#FFFFFF"
+  min_sdk_android: 21

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import 'cards_screen.dart'; // Import the new CardsScreen
+import 'package:provider/provider.dart';
+import 'cards_screen.dart';
+import 'mukhtar_screen.dart';
+import 'consultation_screen.dart';
+import 'document_request_screen.dart';
+import 'appointment_screen.dart';
+import 'user_profile_screen.dart';
+import 'notification_screen.dart';
+import '../services/notification_service.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key}); // Added const here
-
   @override
   Widget build(BuildContext context) {
+    final unreadCount = context.watch<NotificationService>().unreadCount;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -17,67 +25,53 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Logo in the top-left corner
           Padding(
             padding: const EdgeInsets.only(top: 1.0, left: 20.0),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Image.asset(
-                'assets/logo.png',
-                width: 120,
-                height: 120,
-              ),
+              child: Image.asset('assets/logo.png', width: 120, height: 120),
             ),
           ),
-
-          // Welcome text aligned to right
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Text(
-              'مرحبا!',
+              'مرحباً',
               textAlign: TextAlign.right,
-              style: TextStyle( // Added const here
+              style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
             ),
           ),
-          
-          // Flag image below text
-          Padding( // Added const here
+          Padding(
             padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-            child: Center(
-              child: Image.asset('assets/flag.png', height: 90),
-            ),
+            child: Center(child: Image.asset('assets/flag.png', height: 90)),
           ),
-          
-          // Description text aligned to right
-          const Padding( // Added const here
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              'هذا التطبيق الالكتروني\nلمختار مار مبحاثيل بنابيل',
+              'هذا التطبيق الالكتروني\nلمختار مار ميخائيل بنابيل',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                height: 1.5,
-              ),
+              style: TextStyle(fontSize: 18, height: 1.5),
             ),
           ),
-
-          // Four equal buttons
           Expanded(
             child: GridView.count(
-              padding: const EdgeInsets.all(20), // Added const here
+              padding: const EdgeInsets.all(20),
               crossAxisCount: 2,
               childAspectRatio: 1.5,
               mainAxisSpacing: 20,
               crossAxisSpacing: 20,
               children: [
-                _buildMenuButton('طلب موعد', Icons.calendar_today),
-                _buildMenuButton('تقديم طلب', Icons.edit_document),
-                _buildMenuButton('تعرف على المختار', Icons.info_outline),
-                _buildMenuButton('استشارات', Icons.chat),
+                _buildMenuButton(context, 'طلب موعد', Icons.calendar_today),
+                _buildMenuButton(context, 'تقديم طلب', Icons.edit_document),
+                _buildMenuButton(
+                  context,
+                  'تعرف على المختار',
+                  Icons.info_outline,
+                ),
+                _buildMenuButton(context, 'استشارات', Icons.chat),
               ],
             ),
           ),
@@ -85,13 +79,13 @@ class HomeScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[200], // Light grey background
+          color: Colors.grey[200],
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 1,
               blurRadius: 5,
-              offset: const Offset(0, -2), // Added const here
+              offset: Offset(0, -2),
             ),
           ],
         ),
@@ -99,11 +93,11 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
-              icon: const Icon(Icons.home, color: Color(0xFF075E54)), // Added const here
+              icon: Icon(Icons.home, color: Color(0xFF075E54)),
               onPressed: () {},
             ),
             IconButton(
-              icon: const Icon(Icons.credit_card, color: Colors.grey), // Added const here
+              icon: Icon(Icons.credit_card, color: Colors.grey),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -111,13 +105,55 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.notifications, color: Colors.grey), // Added const here
-              onPressed: () {},
+            Stack(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.notifications, color: Colors.grey),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NotificationScreen(),
+                      ),
+                    );
+                  },
+                ),
+                if (unreadCount > 0)
+                  Positioned(
+                    right: 8,
+                    top: 8,
+                    child: Container(
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                      child: Text(
+                        unreadCount.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 8,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             IconButton(
-              icon: const Icon(Icons.person, color: Colors.grey), // Added const here
-              onPressed: () {},
+              icon: Icon(Icons.person, color: Colors.grey),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserProfileScreen(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -125,39 +161,69 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuButton(String text, IconData icon) {
+  Widget _buildMenuButton(BuildContext context, String text, IconData icon) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith<Color>(
-          (Set<MaterialState> states) {
-            if (states.contains(MaterialState.pressed)) {
-              return const Color(0xFF4CAF50); // Added const here
-            }
-            return const Color(0xFF075E54); // Added const here
-          },
-        ),
+        backgroundColor: MaterialStateProperty.resolveWith<Color>((
+          Set<MaterialState> states,
+        ) {
+          if (states.contains(MaterialState.pressed)) {
+            return Color(0xFF4CAF50);
+          }
+          return Color(0xFF075E54);
+        }),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Color(0xFF075E54), width: 1), // Added const here
+            side: BorderSide(color: Color(0xFF075E54), width: 1),
           ),
         ),
-        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(12)),
+        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
       ),
-      onPressed: () {},
+      onPressed: () {
+        if (text == 'تقديم طلب') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DocumentRequestScreen(),
+            ),
+          );
+        }
+        const calendlyUrl = 'https://calendly.com/emokhtar-ai/30min';
+        if (text == 'طلب موعد') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AppointmentScreen(calendlyUrl: calendlyUrl),
+            ),
+          );
+        }
+
+        if (text == 'استشارات') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ConsultationScreen()),
+          );
+        }
+        if (text == 'تعرف على المختار') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MukhtarScreen()),
+          );
+        }
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.white, size: 30),
-          const SizedBox(height: 8), // Added const here
+          SizedBox(height: 8),
           Text(
             text,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white, fontSize: 14), // Added const here
+            style: TextStyle(color: Colors.white, fontSize: 14),
           ),
         ],
       ),
     );
   }
 }
-

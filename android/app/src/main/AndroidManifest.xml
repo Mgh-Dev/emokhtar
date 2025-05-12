@@ -30,6 +30,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_ANDROID_API_KEY"/>
         <uses-permission android:name="android.permission.CAMERA"/>
         <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
