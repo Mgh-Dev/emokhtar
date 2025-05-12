@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'cards_screen.dart';
-import 'mukhtar_screen.dart';
 import 'consultation_screen.dart';
 import 'document_request_screen.dart';
 import 'appointment_screen.dart';
 import 'user_profile_screen.dart';
 import 'notification_screen.dart';
-import '../services/notification_service.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final unreadCount = context.watch<NotificationService>().unreadCount;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -77,139 +72,79 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: Offset(0, -2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-              icon: Icon(Icons.home, color: Color(0xFF075E54)),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.credit_card, color: Colors.grey),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CardsScreen()),
-                );
-              },
-            ),
-            Stack(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.notifications, color: Colors.grey),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NotificationScreen(),
-                      ),
-                    );
-                  },
-                ),
-                if (unreadCount > 0)
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 12,
-                        minHeight: 12,
-                      ),
-                      child: Text(
-                        unreadCount.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 8,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            IconButton(
-              icon: Icon(Icons.person, color: Colors.grey),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const UserProfileScreen(),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+      bottomNavigationBar: _buildBottomNavBar(),
+    );
+  }
+
+  Widget _buildBottomNavBar() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, -2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            icon: Icon(Icons.home, color: Color(0xFF075E54)),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.credit_card, color: Colors.grey),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CardsScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.notifications, color: Colors.grey),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.person, color: Colors.grey),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserProfileScreen()),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildMenuButton(BuildContext context, String text, IconData icon) {
     return ElevatedButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.resolveWith<Color>((
-          Set<MaterialState> states,
-        ) {
-          if (states.contains(MaterialState.pressed)) {
-            return Color(0xFF4CAF50);
-          }
-          return Color(0xFF075E54);
-        }),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: Color(0xFF075E54), width: 1),
-          ),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF075E54),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
       ),
       onPressed: () {
         if (text == 'تقديم طلب') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const DocumentRequestScreen(),
-            ),
-          );
-        }
-        const calendlyUrl = 'https://calendly.com/emokhtar-ai/30min';
-        if (text == 'طلب موعد') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AppointmentScreen(calendlyUrl: calendlyUrl),
-            ),
-          );
-        }
-
-        if (text == 'استشارات') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ConsultationScreen()),
-          );
-        }
-        if (text == 'تعرف على المختار') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MukhtarScreen()),
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (_) => DocumentRequestScreen()));
+        } else if (text == 'طلب موعد') {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => AppointmentScreen()));
+        } else if (text == 'استشارات') {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => ConsultationScreen()));
+        } else if (text == 'تعرف على المختار') {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => MukhtarScreen()));
         }
       },
       child: Column(
@@ -217,11 +152,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           Icon(icon, color: Colors.white, size: 30),
           SizedBox(height: 8),
-          Text(
-            text,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 14),
-          ),
+          Text(text, style: TextStyle(color: Colors.white, fontSize: 14)),
         ],
       ),
     );

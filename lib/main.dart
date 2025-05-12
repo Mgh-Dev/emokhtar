@@ -5,6 +5,9 @@ import 'screens/login.dart';
 import 'services/auth_service.dart';
 import 'services/user_service.dart';
 import 'services/notification_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'screens/manager/manager_home_screen.dart';
+import 'screens/locale_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,32 +21,35 @@ void main() async {
   );
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
-        Provider(create: (_) => UserService()),
-        ChangeNotifierProvider(create: (_) => NotificationService()), // Add this line
-      ],
-      child: MyApp(),
+    ChangeNotifierProvider(
+      create: (context) => LocaleProvider(),
+      child: const MyApp(),
     ),
   );
 }
-
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
+
     return MaterialApp(
-      title: 'E-MOKHTAR',
+      title: 'E-Mokhtar',
+      locale: localeProvider.locale,
+      supportedLocales: const [
+        Locale('ar'), // Arabic
+        Locale('en'), // English
+      ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       theme: ThemeData(
-        primaryColor: Color(0xFF075E54),
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF075E54),
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.white),
-        ),
+        primaryColor: const Color(0xFF075E54),
       ),
-      home: PhoneInputScreen(),
+      home: const PhoneInputScreen(),
     );
   }
 }

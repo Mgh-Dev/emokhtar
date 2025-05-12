@@ -6,6 +6,7 @@ import '../services/auth_service.dart';
 import 'otp_screen.dart';
 import 'signup.dart';
 import 'home_screen.dart'; // Add this import
+import 'manager/manager_home_screen.dart'; // Add this import
 
 class PhoneInputScreen extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               children: [
                 Spacer(),
                 Image.asset(
-                  'assets/logo.png',
+                  'assets/logo_W.png',
                   height: 320,
                 ),
                 const SizedBox(height: 40),
@@ -82,25 +83,48 @@ class _PhoneInputScreenState extends State<PhoneInputScreen> {
               ],
             ),
           ),
-          // Skip button in bottom left corner
+          // Test buttons in bottom left corner
           Positioned(
             left: 20,
             bottom: 20,
-            child: TextButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => HomeScreen()),
-                );
-              },
-              child: const Text(
-                'Skip',
-                style: TextStyle(
-                  color: Color(0xFF075E54),
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Skip to User View
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => HomeScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Skip to User View',
+                    style: TextStyle(
+                      color: Color(0xFF075E54),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+                // Skip to Manager View
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => ManagerHomeScreen()),
+                    );
+                  },
+                  child: const Text(
+                    'Skip to Manager View',
+                    style: TextStyle(
+                      color: Color(0xFF128C7E), // Different color for manager
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

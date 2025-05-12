@@ -16,6 +16,8 @@ PODS:
     - GoogleMaps/Base
   - image_picker_ios (0.0.1):
     - Flutter
+  - printing (1.0.0):
+    - Flutter
   - scanbot_sdk (1.0.0):
     - Flutter
     - ScanbotSDK (= 4.2.2)
@@ -30,6 +32,7 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - printing (from `.symlinks/plugins/printing/ios`)
   - scanbot_sdk (from `.symlinks/plugins/scanbot_sdk/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
@@ -48,6 +51,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  printing:
+    :path: ".symlinks/plugins/printing/ios"
   scanbot_sdk:
     :path: ".symlinks/plugins/scanbot_sdk/ios"
   url_launcher_ios:
@@ -60,6 +65,7 @@ SPEC CHECKSUMS:
   google_maps_flutter_ios: e31555a04d1986ab130f2b9f24b6cdc861acc6d3
   GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
   scanbot_sdk: 67dce5950e3935d5beb017873107de28271266fd
   ScanbotSDK: d982d517143b71cfab94792bfd8d4bddc8c4dee8
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe

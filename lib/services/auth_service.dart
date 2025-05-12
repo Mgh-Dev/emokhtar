@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';  // Add this import
 
 enum PhoneApprovalStatus {
   approved,
@@ -7,17 +7,22 @@ enum PhoneApprovalStatus {
 }
 
 class AuthService with ChangeNotifier {
+  bool _isManager = false;  // Add manager state tracking
+  
+  bool get isManager => _isManager;
+  bool get isAuthenticated => false; // Add your actual auth logic
+
   Future<PhoneApprovalStatus> checkPhoneApproval(String phone) async {
     // Dummy logic simulating Firestore check
     if (phone == "+1234567890") {
+      _isManager = true;  // Example: set manager status
+      notifyListeners();
       return PhoneApprovalStatus.approved;
     }
 
-    // Simulate checking last request timestamp (blocked < 90 days)
-    final now = DateTime.now();
-    final lastRequest = DateTime.now().subtract(Duration(days: 30)); // Dummy
-
-    if (now.difference(lastRequest).inDays < 90) {
+    // Simulate checking last request timestamp
+    final lastRequest = DateTime.now().subtract(Duration(days: 30));
+    if (DateTime.now().difference(lastRequest).inDays < 90) {
       return PhoneApprovalStatus.blocked;
     }
 
